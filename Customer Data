@@ -1,9 +1,13 @@
+#Within this SQL are statements created through referencing multiple tables regarding customer/order data
+
+#Orders placed in January
 SELECT COUNT(orderID) Orders
 FROM BIT_DB.JanSales
 WHERE orderID <> 'OrderID'
 AND length(orderID) = 6 
 ;
 
+#Of those orders above were iPhones
 SELECT COUNT(orderID) Orders
 FROM BIT_DB.JanSales
 WHERE product = 'IPhone'
@@ -11,6 +15,7 @@ AND orderID <> 'OrderID'
 AND length(orderID) = 6 
 ;
 
+#Display customer account numbers for all orders placed in February
 SELECT distinct acctnum
 FROM BIT_DB.customers as c
 INNER JOIN BIT_DB.FebSales as fb
@@ -19,24 +24,28 @@ WHERE orderID <> 'OrderID'
 AND length(orderID) = 6 
 ;
 
-SELECT distinct product,MIN(price)
+#Find the cheapest product sold in January as well as its price
+SELECT distinct product, MIN(price)
 FROM BIT_DB.JanSales
 GROUP BY product, price
 ORDER BY price asc
 LIMIT 1
 ;
 
+#Total revenue of each product sold in January
 SELECT ROUND(SUM(quantity)*price, 2) as revenue, product
 FROM BIT_DB.JanSales
 GROUP BY product
 ;
 
+#Products sold to specific location: 548 Lincoln St, Seattle, Wa 98101. How many were sold? What is the total revenue?
 SELECT SUM(Quantity) as amount, SUM(quantity) * price as revenue, product 
 FROM BIT_DB.FebSales
 WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product
 ;
- 
+
+#Customers who ordered more than two items at once as well as the average amount spent
 SELECT count(distinct customers.acctnum) as cust,ROUND(avg(quantity * price),2) as price
 FROM BIT_DB.FebSales
 LEFT JOIN BIT_DB.customers
