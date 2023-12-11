@@ -54,3 +54,10 @@ WHERE FebSales.Quantity > 2
 AND length(orderid) = 6
 AND orderid <> 'Order ID'
 ;
+
+#The sum of each product sold in Los Angeles in February
+SELECT product, SUM(quantity) as amount
+FROM BIT_DB.FebSales
+WHERE location like '%Los_Angeles%'
+GROUP BY product
+;
