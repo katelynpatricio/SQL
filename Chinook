@@ -1,0 +1,44 @@
+#This project focuses on data provided from a digital media store
+
+#The album that has the most tracks
+SELECT count(t.name) as amount,a.title 
+FROM albums a
+JOIN tracks t ON a.albumid = t.albumid
+GROUP BY a.title
+ORDER BY amount desc
+LIMIT 1
+;
+
+#The most popular genre outside the US
+SELECT g.name,count(g.name) as amount
+FROM invoices inv
+JOIN invoice_items invite ON inv.invoiceid = invite.invoiceid
+JOIN tracks t ON invite.trackid = t.trackid
+JOIN genres g ON t.genreid = g.genreid
+WHERE billingcountry  <> 'USA'
+GROUP BY g.name
+ORDER BY amount desc
+LIMIT 1
+;
+
+#The sales rep who had the most sales in 2010 and how many
+SELECT count(cust.supportrepid) sales,emp.firstname,emp.lastname
+FROM invoices inv
+JOIN customers cust ON inv.customerid = cust.customerid
+JOIN employees emp ON cust.supportrepid = emp.employeeid
+WHERE inv.invoicedate LIKE '2010%'
+GROUP BY cust.supportrepid
+LIMIT 1
+;
+
+#The least popular artist in regards to sales
+SELECT art.name, ROUND(sum(inv.total),2) as sum
+FROM artists art
+JOIN albums alb ON art.artistid = alb.artistid
+JOIN tracks t ON alb.albumid = t.albumid
+JOIN invoice_items invite ON t.trackid = invite.trackid
+JOIN invoices inv ON invite.invoiceid = inv.invoiceid
+GROUP BY art.name
+ORDER BY sum asc
+LIMIT 1
+;
