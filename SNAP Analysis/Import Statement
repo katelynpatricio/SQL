@@ -1,6 +1,6 @@
 -- Import Statement
 
-CREATE TABLE us_counties_2000 (
+CREATE TABLE counties_2000 (
   geo_name varchar(90), -- County/state name,
   state_us_abbreviation varchar(2), -- State/U.S. abbreviation
   state_fips varchar(2), -- State FIPS code
@@ -19,7 +19,7 @@ CREATE TABLE us_counties_2000 (
   p0020003 integer -- Not Hispanic or Latino
 );
 
-SELECT * FROM us_counties_2000;
+SELECT * FROM counties_2000;
 
 SELECT * FROM counties;
 
@@ -34,14 +34,14 @@ FROM counties c2010
 INNER JOIN us_counties_2000 c2000 ON c2010.state_fips = c2000.state_fips AND c2010.county_fips = c2000.county_fips AND c2010.p0010001 != c2000.p0010001
 ORDER BY pct_change DESC;
 
-ALTER TABLE us_counties_2000
+ALTER TABLE counties_2000
   ADD COLUMN cname varchar(60);
 
-ALTER TABLE us_counties_2000
+ALTER TABLE counties_2000
   DROP COLUMN cname;
 
-UPDATE us_counties_2000
+UPDATE counties_2000
 
 SET cname = split_part(geo_name,',', 1)
 
-SELECT * FROM us_counties_2000
+SELECT * FROM counties_2000
