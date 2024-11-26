@@ -1,0 +1,18 @@
+-- Import Statement
+
+CREATE TABLE excess (
+  Date date,
+  State varchar(25),
+  Deaths integer,
+  UpperBound integer,
+  ExceedsEst boolean,
+  ExpectedD integer,
+  ExcessD integer,
+  TotalExcess integer,
+  PerExcess numeric,
+  year integer,
+  TypeE varchar(100),
+  Outcome varchar(100),
+  Suppress varchar(100),
+  Notes text
+);
